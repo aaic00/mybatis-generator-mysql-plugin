@@ -3,13 +3,16 @@
 <generatorConfiguration>
   <classPathEntry
     location="c:\var\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
-  <context id="generater-test">
-    <plugin type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
+  <context id="stock">
+    <plugin type="com.xjs.mybatis.generator.plugins.SerializablePlugin" />
+    <plugin
+      type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.ToStringPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SameAsPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin" />
-    <!-- <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"></plugin> -->
+    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceSqlPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceStablePlugin" />
     <commentGenerator>
       <property name="suppressDate" value="true" />
       <property name="javaFileEncoding" value="UTF-8" />
@@ -17,20 +20,29 @@
 
     <jdbcConnection connectionURL="jdbc:mysql://dev.360xjs.com:3306/fundn"
       driverClass="com.mysql.jdbc.Driver" password="putty456" userId="xjs" />
-    <javaModelGenerator targetPackage="com.xjs.mybatis.generator.plugins.target" targetProject="mybatis-generator-mysql-plugin-target" />
-    <sqlMapGenerator targetPackage="com.xjs.mybatis.generator.plugins.target" targetProject="mybatis-generator-mysql-plugin-target" />
-    <javaClientGenerator targetPackage="com.xjs.mybatis.generator.plugins.target" targetProject="mybatis-generator-mysql-plugin-target"
-      type="XMLMAPPER" />
-    <table tableName="person" enableSelectByExample="false" enableDeleteByExample="false"
-      enableCountByExample="false" enableUpdateByExample="false">
-      <property name="insertIgnore" value="true"/>
-      <property name="insertBatch" value="true"/>
-      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="birthday" javaType="java.time.LocalDate"
+    <javaModelGenerator targetPackage="com.xjs.finance.stock.entity"
+      targetProject="xjs-data" />
+    <sqlMapGenerator targetPackage="com.xjs.finance.stock.dao"
+      targetProject="xjs-data" />
+    <javaClientGenerator targetPackage="com.xjs.finance.stock.dao"
+      targetProject="xjs-data" type="XMLMAPPER" />
+    <table tableName="stock_price" enableSelectByExample="false"
+      enableDeleteByExample="false" enableCountByExample="false"
+      enableUpdateByExample="false">
+      <property name="insertBatch" value="true" />
+      <property name="selectRecentReal" value="true" />
+      <property name="deleteEstimate" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC"
+        identity="true" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate"
         typeHandler="org.apache.ibatis.type.LocalDateTypeHandler">
       </columnOverride>
-      <columnOverride column="create_datetime" isGeneratedAlways="true" />
-      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+      <columnOverride column="stable" javaType="com.xjs.finance.Stable"
+        typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime"
+        isGeneratedAlways="true" />
+      <columnOverride column="update_datetime"
+        isGeneratedAlways="true" />
     </table>
   </context>
 </generatorConfiguration>

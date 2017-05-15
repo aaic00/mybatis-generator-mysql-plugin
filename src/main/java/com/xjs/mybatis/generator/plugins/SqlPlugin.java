@@ -23,6 +23,9 @@ import org.mybatis.generator.config.GeneratedKey;
 
 public class SqlPlugin extends PluginAdapter {
 
+  public static final String TABLE_ENABLE_INSERT_IGNORE = "insertIgnore";
+  public static final String TABLE_ENABLE_INSERT_BATCH = "insertBatch";
+
   @Override
   public boolean validate(final List<String> warnings) {
     return true;
@@ -34,14 +37,14 @@ public class SqlPlugin extends PluginAdapter {
     final FullyQualifiedJavaType entityType =
         new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
-    if (PropertiesUtils.isTrue(introspectedTable, PropertiesUtils.TABLE_ENABLE_INSERT_IGNORE)) {
+    if (PropertiesUtils.isTrue(introspectedTable, SqlPlugin.TABLE_ENABLE_INSERT_IGNORE)) {
       this.addMethodInsert(interfaze, introspectedTable, entityType,
-          PropertiesUtils.TABLE_ENABLE_INSERT_IGNORE);
+          SqlPlugin.TABLE_ENABLE_INSERT_IGNORE);
     }
 
-    if (PropertiesUtils.isTrue(introspectedTable, PropertiesUtils.TABLE_ENABLE_INSERT_BATCH)) {
+    if (PropertiesUtils.isTrue(introspectedTable, SqlPlugin.TABLE_ENABLE_INSERT_BATCH)) {
       this.addMethodInsertList(interfaze, introspectedTable, entityType,
-          PropertiesUtils.TABLE_ENABLE_INSERT_BATCH);
+          SqlPlugin.TABLE_ENABLE_INSERT_BATCH);
     }
 
     return true;
@@ -53,11 +56,11 @@ public class SqlPlugin extends PluginAdapter {
     final FullyQualifiedJavaType entityType =
         new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
 
-    if (PropertiesUtils.isTrue(introspectedTable, PropertiesUtils.TABLE_ENABLE_INSERT_IGNORE)) {
+    if (PropertiesUtils.isTrue(introspectedTable, SqlPlugin.TABLE_ENABLE_INSERT_IGNORE)) {
       this.addElementInsertIgnore(document, introspectedTable, entityType);
     }
 
-    if (PropertiesUtils.isTrue(introspectedTable, PropertiesUtils.TABLE_ENABLE_INSERT_BATCH)) {
+    if (PropertiesUtils.isTrue(introspectedTable, SqlPlugin.TABLE_ENABLE_INSERT_BATCH)) {
       this.addElementInsertBatch(document, introspectedTable, entityType);
     }
 
@@ -89,6 +92,60 @@ public class SqlPlugin extends PluginAdapter {
     method.addParameter(new Parameter(listType, "recordList")); //$NON-NLS-1$
     this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
     interfaze.addImportedType(listType);
+    interfaze.addMethod(method);
+  }
+
+  public void addMethodDelete(final Interface interfaze, final IntrospectedTable introspectedTable,
+      final FullyQualifiedJavaType entityType, final String methodName,
+      final Parameter... parameters) {
+    final Method method = new Method();
+    method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+    method.setVisibility(JavaVisibility.PUBLIC);
+    method.setName(methodName);
+    for (final Parameter parameter : parameters) {
+      method.addParameter(parameter);
+    }
+    this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    interfaze.addImportedType(entityType);
+    interfaze.addMethod(method);
+  }
+
+  public void addMethodUpdate(final Interface interfaze, final IntrospectedTable introspectedTable,
+      final FullyQualifiedJavaType entityType, final String methodName,
+      final Parameter... parameters) {
+    this.addMethodDelete(interfaze, introspectedTable, entityType, methodName, parameters);
+  }
+
+  public void addMethodSelect(final Interface interfaze, final IntrospectedTable introspectedTable,
+      final FullyQualifiedJavaType entityType, final String methodName,
+      final Parameter... parameters) {
+    final Method method = new Method();
+    method.setReturnType(entityType);
+    method.setVisibility(JavaVisibility.PUBLIC);
+    method.setName(methodName);
+    for (final Parameter parameter : parameters) {
+      method.addParameter(parameter);
+    }
+    this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    interfaze.addImportedType(entityType);
+    interfaze.addMethod(method);
+  }
+
+  public void addMethodSelectList(final Interface interfaze,
+      final IntrospectedTable introspectedTable, final FullyQualifiedJavaType entityType,
+      final String methodName, final Parameter... parameters) {
+    final Method method = new Method();
+    final FullyQualifiedJavaType listType = FullyQualifiedJavaType.getNewListInstance();
+    listType.addTypeArgument(entityType);
+    method.setReturnType(listType);
+    method.setVisibility(JavaVisibility.PUBLIC);
+    method.setName(methodName);
+    for (final Parameter parameter : parameters) {
+      method.addParameter(parameter);
+    }
+    this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    interfaze.addImportedType(listType);
+    interfaze.addImportedType(entityType);
     interfaze.addMethod(method);
   }
 
@@ -222,6 +279,13 @@ public class SqlPlugin extends PluginAdapter {
     answer.addElement(valuesForeachElement);
 
     document.getRootElement().addElement(answer);
+  }
+
+  protected XmlElement getBaseColumnListElement(final IntrospectedTable introspectedTable) {
+    final XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
+    answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
+        introspectedTable.getBaseColumnListId()));
+    return answer;
   }
 
 }

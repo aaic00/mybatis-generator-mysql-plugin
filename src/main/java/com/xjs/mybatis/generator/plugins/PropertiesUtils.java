@@ -7,9 +7,7 @@ import org.mybatis.generator.api.IntrospectedTable;
 
 public final class PropertiesUtils {
 
-  public final static String TABLE_ENABLE_INSERT_IGNORE = "insertIgnore";
-  public static final String TABLE_ENABLE_INSERT_BATCH = "insertBatch";
-  public final static String COLUMN_IGNORE_CONSTRUCTOR = "ignoreConstructor";
+  public static final String COLUMN_IGNORE_CONSTRUCTOR = "ignoreConstructor";
 
   private PropertiesUtils() {
 

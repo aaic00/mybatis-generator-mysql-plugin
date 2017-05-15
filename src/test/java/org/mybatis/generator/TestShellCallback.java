@@ -21,6 +21,8 @@ public class TestShellCallback extends DefaultShellCallback {
 
       final File file = path.toFile();
 
+      System.out.println(file.getAbsolutePath());
+
       if (!file.exists()) {
         Files.createDirectories(path);
       }

@@ -14,7 +14,6 @@
 package com.xjs.mybatis.generator.plugins;
 
 import java.util.List;
-import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -24,17 +23,8 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.internal.util.StringUtility;
 
 public class ToStringPlugin extends PluginAdapter {
-
-  private boolean useToStringFromRoot;
-
-  @Override
-  public void setProperties(final Properties properties) {
-    super.setProperties(properties);
-    this.useToStringFromRoot = StringUtility.isTrue(properties.getProperty("useToStringFromRoot"));
-  }
 
   @Override
   public boolean validate(final List<String> warnings) {

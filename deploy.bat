@@ -1,0 +1,1 @@
+jar uf %ECLIPSE_HOME%\plugins\org.mybatis.generator.core_1.3.5.201609070108.jar -C target/classes com
