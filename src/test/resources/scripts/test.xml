@@ -3,7 +3,7 @@
 <generatorConfiguration>
   <classPathEntry
     location="c:\var\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
-  <context id="stock">
+  <context id="fund">
     <plugin type="com.xjs.mybatis.generator.plugins.SerializablePlugin" />
     <plugin
       type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
@@ -11,8 +11,6 @@
     <plugin type="com.xjs.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SameAsPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin" />
-    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceSqlPlugin" />
-    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceStablePlugin" />
     <commentGenerator>
       <property name="suppressDate" value="true" />
       <property name="javaFileEncoding" value="UTF-8" />
@@ -20,25 +18,43 @@
 
     <jdbcConnection connectionURL="jdbc:mysql://dev.360xjs.com:3306/fundn"
       driverClass="com.mysql.jdbc.Driver" password="putty456" userId="xjs" />
-    <javaModelGenerator targetPackage="com.xjs.finance.stock.entity"
+    <javaModelGenerator targetPackage="com.xjs.finance.fund.dao"
       targetProject="xjs-data" />
-    <sqlMapGenerator targetPackage="com.xjs.finance.stock.dao"
+    <sqlMapGenerator targetPackage="com.xjs.finance.fund.dao"
       targetProject="xjs-data" />
-    <javaClientGenerator targetPackage="com.xjs.finance.stock.dao"
+    <javaClientGenerator targetPackage="com.xjs.finance.fund.dao"
       targetProject="xjs-data" type="XMLMAPPER" />
-    <table tableName="stock_price" enableSelectByExample="false"
+
+    <!-- tables -->
+
+    <table tableName="fund" enableSelectByExample="false"
       enableDeleteByExample="false" enableCountByExample="false"
       enableUpdateByExample="false">
-      <property name="insertBatch" value="true" />
-      <property name="selectRecentReal" value="true" />
-      <property name="deleteEstimate" value="true" />
-      <generatedKey column="id" sqlStatement="JDBC"
-        identity="true" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate"
+      <property name="insertOrUpdate" value="true" />
+      <columnOverride column="fund_type"
+        javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+      </columnOverride>
+      <columnOverride column="issuing_date" javaType="java.time.LocalDate"
         typeHandler="org.apache.ibatis.type.LocalDateTypeHandler">
       </columnOverride>
-      <columnOverride column="stable" javaType="com.xjs.finance.Stable"
+      <columnOverride column="inception_date" javaType="java.time.LocalDate"
+        typeHandler="org.apache.ibatis.type.LocalDateTypeHandler">
+      </columnOverride>
+      <columnOverride column="fund_asset_date" javaType="java.time.LocalDate"
+        typeHandler="org.apache.ibatis.type.LocalDateTypeHandler">
+      </columnOverride>
+      <columnOverride column="fund_share_date" javaType="java.time.LocalDate"
+        typeHandler="org.apache.ibatis.type.LocalDateTypeHandler">
+      </columnOverride>
+      <columnOverride column="status"
+        javaType="com.xjs.finance.fund.FundStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="purchase_status"
+        javaType="com.xjs.finance.fund.FundPurchaseStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="redemption_status"
+        javaType="com.xjs.finance.fund.FundRedemptionStatus"
         typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="filter"
+        javaType="com.xjs.finance.fund.FundFilter" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="create_datetime"
         isGeneratedAlways="true" />
       <columnOverride column="update_datetime"
