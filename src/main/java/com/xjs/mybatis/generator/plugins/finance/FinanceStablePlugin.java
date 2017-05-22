@@ -63,6 +63,7 @@ public class FinanceStablePlugin extends PluginAdapter {
         RootClassInfo.getInstance(this.getRootClass(introspectedTable), this.warnings);
 
     final Method method = new Method();
+    method.addAnnotation("@Override");
     method.setReturnType(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()));
     method.setVisibility(JavaVisibility.PUBLIC);
     method.setName(stable.toLowerCase());
