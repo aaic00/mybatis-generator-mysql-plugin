@@ -24,9 +24,12 @@ public class PluginTest {
         cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
 
     final DefaultShellCallback shellCallback = new TestShellCallback(true);
+    System.out.println(shellCallback.getDirectory(null, null));
 
     final MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
     myBatisGenerator.generate(null, null, null, true);
+
+
 
   }
 }

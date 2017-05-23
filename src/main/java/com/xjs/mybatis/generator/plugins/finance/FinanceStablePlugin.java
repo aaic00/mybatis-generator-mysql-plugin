@@ -20,6 +20,8 @@ import com.xjs.mybatis.generator.plugins.PropertiesUtils;
 
 public class FinanceStablePlugin extends PluginAdapter {
 
+  private static final String ENTITY_HAS_STABLE = "hasStable";
+
   private static final FullyQualifiedJavaType LOCAL_DATE_TYPE =
       new FullyQualifiedJavaType("java.time.LocalDate");
   private List<String> warnings;
@@ -32,21 +34,27 @@ public class FinanceStablePlugin extends PluginAdapter {
   @Override
   public boolean modelBaseRecordClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); // NOSONAR //$NON-NLS-1$
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+      this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); // NOSONAR //$NON-NLS-1$
+    }
     return true;
   }
 
   @Override
   public boolean modelRecordWithBLOBsClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+      this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
+    }
     return true;
   }
 
   @Override
   public boolean modelPrimaryKeyClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+      this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
+    }
     return true;
   }
 
