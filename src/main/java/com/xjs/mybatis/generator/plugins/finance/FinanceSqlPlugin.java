@@ -17,7 +17,6 @@ import com.xjs.mybatis.generator.plugins.SqlPlugin;
 
 public class FinanceSqlPlugin extends SqlPlugin {
 
-  private static final String TABLE_ENABLE_SELECT_CODE = "selectCode";
   private static final String TABLE_ENABLE_SELECT_RECENT_REAL = "selectRecentReal";
   private static final String TABLE_ENABLE_DELETE_ESTIMATE = "deleteEstimate";
 
@@ -31,14 +30,6 @@ public class FinanceSqlPlugin extends SqlPlugin {
       final IntrospectedTable introspectedTable) {
     final FullyQualifiedJavaType entityType =
         new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-
-    if (PropertiesUtils.isTrue(introspectedTable, FinanceSqlPlugin.TABLE_ENABLE_SELECT_CODE)) {
-      // org.apache.ibatis.annotations.Param
-      interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param"));
-      this.addMethodSelectList(interfaze, introspectedTable, entityType,
-          FinanceSqlPlugin.TABLE_ENABLE_SELECT_CODE,
-          new Parameter(FullyQualifiedJavaType.getStringInstance(), "code", "@Param(\"code\")"));
-    }
 
     if (PropertiesUtils.isTrue(introspectedTable,
         FinanceSqlPlugin.TABLE_ENABLE_SELECT_RECENT_REAL)) {
@@ -59,10 +50,6 @@ public class FinanceSqlPlugin extends SqlPlugin {
   @Override
   public boolean sqlMapDocumentGenerated(final Document document,
       final IntrospectedTable introspectedTable) {
-    if (PropertiesUtils.isTrue(introspectedTable, FinanceSqlPlugin.TABLE_ENABLE_SELECT_CODE)) {
-      this.addElementSelectCode(document, introspectedTable,
-          FinanceSqlPlugin.TABLE_ENABLE_SELECT_CODE);
-    }
 
     if (PropertiesUtils.isTrue(introspectedTable,
         FinanceSqlPlugin.TABLE_ENABLE_SELECT_RECENT_REAL)) {
@@ -77,24 +64,6 @@ public class FinanceSqlPlugin extends SqlPlugin {
 
 
     return true;
-  }
-
-  private void addElementSelectCode(final Document document,
-      final IntrospectedTable introspectedTable, final String sqlId) {
-    final XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
-    answer.addAttribute(new Attribute("id", sqlId)); //$NON-NLS-1$
-    answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-        introspectedTable.getBaseResultMapId()));
-
-    this.context.getCommentGenerator().addComment(answer);
-
-    answer.addElement(new TextElement("select ")); //$NON-NLS-1$
-    answer.addElement(this.getBaseColumnListElement(introspectedTable));
-    answer.addElement(new TextElement(
-        "from ".concat(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
-    answer.addElement(new TextElement("where code = #{code,jdbcType=VARCHAR}"));
-    answer.addElement(new TextElement("order by trade_date asc"));
-    document.getRootElement().addElement(answer);
   }
 
   private void addElementDeleteEstimate(final Document document,
