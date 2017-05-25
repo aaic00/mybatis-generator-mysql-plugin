@@ -16,9 +16,9 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.PropertyRegistry;
 
-import com.xjs.mybatis.generator.plugins.PropertiesUtils;
+import com.xjs.mybatis.generator.plugins.utils.PropertiesUtils;
 
-public class FinanceStablePlugin extends PluginAdapter {
+public class FinanceStableEntityPlugin extends PluginAdapter {
 
   private static final String ENTITY_HAS_STABLE = "hasStable";
 
@@ -34,7 +34,7 @@ public class FinanceStablePlugin extends PluginAdapter {
   @Override
   public boolean modelBaseRecordClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStableEntityPlugin.ENTITY_HAS_STABLE)) {
       this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); // NOSONAR //$NON-NLS-1$
     }
     return true;
@@ -43,7 +43,7 @@ public class FinanceStablePlugin extends PluginAdapter {
   @Override
   public boolean modelRecordWithBLOBsClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStableEntityPlugin.ENTITY_HAS_STABLE)) {
       this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
     }
     return true;
@@ -52,7 +52,7 @@ public class FinanceStablePlugin extends PluginAdapter {
   @Override
   public boolean modelPrimaryKeyClassGenerated(final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
-    if (PropertiesUtils.isTrue(introspectedTable, FinanceStablePlugin.ENTITY_HAS_STABLE)) {
+    if (PropertiesUtils.isTrue(introspectedTable, FinanceStableEntityPlugin.ENTITY_HAS_STABLE)) {
       this.generateMethodStables(topLevelClass, introspectedTable, "LAST", "ESTIMATE"); //$NON-NLS-1$
     }
     return true;
@@ -75,7 +75,7 @@ public class FinanceStablePlugin extends PluginAdapter {
     method.setReturnType(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()));
     method.setVisibility(JavaVisibility.PUBLIC);
     method.setName(stable.toLowerCase());
-    method.addParameter(new Parameter(FinanceStablePlugin.LOCAL_DATE_TYPE, "tradeDate")); // NOSONAR //$NON-NLS-1$
+    method.addParameter(new Parameter(FinanceStableEntityPlugin.LOCAL_DATE_TYPE, "tradeDate")); // NOSONAR //$NON-NLS-1$
 
     this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 

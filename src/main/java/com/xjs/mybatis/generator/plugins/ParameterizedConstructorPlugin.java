@@ -28,6 +28,8 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.PropertyRegistry;
 
+import com.xjs.mybatis.generator.plugins.utils.PropertiesUtils;
+
 public class ParameterizedConstructorPlugin extends PluginAdapter {
 
   private List<String> warnings;

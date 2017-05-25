@@ -1,4 +1,4 @@
-package com.xjs.mybatis.generator.plugins;
+package com.xjs.mybatis.generator.plugins.utils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class ColumnContext {
@@ -19,6 +20,7 @@ public class ColumnContext {
   private final String javaProperty;
   private final Parameter parameter;
   private final Parameter annotatedParameter;
+  private final TextElement whereElement;
 
   public ColumnContext(final String columnName) {
     this.columnName = columnName;
@@ -26,6 +28,8 @@ public class ColumnContext {
     this.parameter = new Parameter(FullyQualifiedJavaType.getStringInstance(), this.javaProperty);
     this.annotatedParameter = new Parameter(FullyQualifiedJavaType.getStringInstance(),
         this.javaProperty, "@Param(\"" + this.javaProperty + "\")");
+    this.whereElement = new TextElement(
+        StringUtils.join("where ", columnName, " = #{", this.javaProperty, ",jdbcType=VARCHAR}"));
   }
 
   public Set<FullyQualifiedJavaType> getImportedTypes() {
@@ -46,6 +50,10 @@ public class ColumnContext {
 
   public Parameter getAnnotatedParameter() {
     return this.annotatedParameter;
+  }
+
+  public TextElement getWhereElement() {
+    return whereElement;
   }
 
 }

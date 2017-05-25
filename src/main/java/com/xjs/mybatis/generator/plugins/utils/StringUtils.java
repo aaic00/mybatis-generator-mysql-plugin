@@ -1,4 +1,4 @@
-package com.xjs.mybatis.generator.plugins;
+package com.xjs.mybatis.generator.plugins.utils;
 
 public final class StringUtils {
   private StringUtils() {}
