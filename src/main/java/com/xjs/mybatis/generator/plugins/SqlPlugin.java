@@ -17,6 +17,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 import com.xjs.mybatis.generator.plugins.base.AbstractSqlGenerator;
 import com.xjs.mybatis.generator.plugins.base.AbstractSqlPlugin;
+import com.xjs.mybatis.generator.plugins.utils.XmlUtils;
 
 public class SqlPlugin extends AbstractSqlPlugin {
 
@@ -63,8 +64,7 @@ public class SqlPlugin extends AbstractSqlPlugin {
         final IntrospectedColumn introspectedColumn = columns.get(i);
 
         insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-        valuesClause
-            .append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, "item.")); // $NON-NLS-1$
+        valuesClause.append(XmlUtils.getParameterClause(introspectedColumn, "item.")); // $NON-NLS-1$
         if (i + 1 < columns.size()) {
           insertClause.append(", "); // $NON-NLS-1$
           valuesClause.append(", "); // $NON-NLS-1$
@@ -115,7 +115,7 @@ public class SqlPlugin extends AbstractSqlPlugin {
         final IntrospectedColumn introspectedColumn = columns.get(i);
 
         insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-        valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+        valuesClause.append(XmlUtils.getParameterClause(introspectedColumn));
         if (i + 1 < columns.size()) {
           insertClause.append(", "); // $NON-NLS-1$
           valuesClause.append(", "); // $NON-NLS-1$
@@ -170,10 +170,10 @@ public class SqlPlugin extends AbstractSqlPlugin {
         final IntrospectedColumn introspectedColumn = columns.get(i);
 
         insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-        valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+        valuesClause.append(XmlUtils.getParameterClause(introspectedColumn));
         updateClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
         updateClause.append(" = "); // $NON-NLS-1$
-        updateClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+        updateClause.append(XmlUtils.getParameterClause(introspectedColumn));
 
         if (i + 1 < columns.size()) {
           insertClause.append(", "); // $NON-NLS-1$
