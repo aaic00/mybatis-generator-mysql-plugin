@@ -22,6 +22,17 @@ import com.xjs.mybatis.generator.plugins.utils.XmlUtils;
 public class SqlPlugin extends AbstractSqlPlugin {
 
   @Override
+  public void initialized(final IntrospectedTable introspectedTable) {
+    super.initialized(introspectedTable);
+    if ("true".equals(this.properties.get("hackSchema"))) {
+      introspectedTable.setSqlMapFullyQualifiedRuntimeTableName(
+          introspectedTable.getFullyQualifiedTableNameAtRuntime().replace("..", "."));
+      introspectedTable.setSqlMapAliasedFullyQualifiedRuntimeTableName(
+          introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime().replace("..", "."));
+    }
+  }
+
+  @Override
   protected void addJavaMethods(final Interface interfaze, final TopLevelClass topLevelClass,
       final IntrospectedTable introspectedTable) {
     this.addMethodInsertList(interfaze, introspectedTable, "insertBatch");
