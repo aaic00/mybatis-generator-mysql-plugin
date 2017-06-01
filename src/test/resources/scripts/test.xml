@@ -10,7 +10,9 @@
     <plugin type="com.xjs.mybatis.generator.plugins.ToStringPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SameAsPlugin" />
-    <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin">
+      <property name="hackSchema" value="true"></property>
+    </plugin>
     <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceSqlPlugin">
       <property name="codeColumnName" value="fund_code" />
     </plugin>
