@@ -10,6 +10,8 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
+import com.xjs.mybatis.generator.plugins.base.JDBCType;
+
 public class ColumnContext {
 
   private final static Set<FullyQualifiedJavaType> importedTypes =
@@ -22,14 +24,15 @@ public class ColumnContext {
   private final Parameter annotatedParameter;
   private final TextElement whereElement;
 
-  public ColumnContext(final String columnName) {
+  public ColumnContext(final String columnName, final JDBCType jdbcType,
+      final FullyQualifiedJavaType javaType) {
     this.columnName = columnName;
     this.javaProperty = JavaBeansUtil.getCamelCaseString(this.columnName, false);
-    this.parameter = new Parameter(FullyQualifiedJavaType.getStringInstance(), this.javaProperty);
-    this.annotatedParameter = new Parameter(FullyQualifiedJavaType.getStringInstance(),
-        this.javaProperty, "@Param(\"" + this.javaProperty + "\")");
-    this.whereElement = new TextElement(
-        StringUtils.join("where ", columnName, " = #{", this.javaProperty, ",jdbcType=VARCHAR}"));
+    this.parameter = new Parameter(javaType, this.javaProperty);
+    this.annotatedParameter =
+        new Parameter(javaType, this.javaProperty, "@Param(\"" + this.javaProperty + "\")");
+    this.whereElement = new TextElement(StringUtils.join("where ", columnName, " = #{",
+        this.javaProperty, ",jdbcType=", jdbcType.name(), "}"));
   }
 
   public Set<FullyQualifiedJavaType> getImportedTypes() {
@@ -53,7 +56,7 @@ public class ColumnContext {
   }
 
   public TextElement getWhereElement() {
-    return whereElement;
+    return this.whereElement;
   }
 
 }
