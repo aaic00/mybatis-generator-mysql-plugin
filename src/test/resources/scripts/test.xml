@@ -3,6 +3,7 @@
 <generatorConfiguration>
   <classPathEntry location="c:\var\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
   <context id="fund">
+    <plugin type="com.xjs.mybatis.generator.plugins.FieldRemarkPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SerializablePlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.ToStringPlugin" />
