@@ -21,6 +21,9 @@ import com.xjs.mybatis.generator.plugins.utils.PropertiesUtils;
 
 public abstract class AbstractSqlPlugin extends PluginAdapter {
 
+  protected static final FullyQualifiedJavaType localDateType =
+      new FullyQualifiedJavaType("java.time.LocalDate");
+
   private Attribute baseResultMapAttribute;
   private XmlElement baseColumnListElement;
   private String tableName;

@@ -12,6 +12,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import com.xjs.mybatis.generator.plugins.utils.PropertiesUtils;
 
 public abstract class AbstractSqlGenerator {
+
   protected String sqlName;
 
   protected Context context;

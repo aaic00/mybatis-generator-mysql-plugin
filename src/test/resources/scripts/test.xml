@@ -82,6 +82,8 @@
       <property name="selectId" value="true" />
       <property name="selectIdRecentReal" value="true" />
       <property name="deleteIdEstimate" value="true" />
+      <property name="selectIdDate" value="true" />
+      <property name="selectIdTerm" value="true" />
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
       <columnOverride column="fof_type" javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
