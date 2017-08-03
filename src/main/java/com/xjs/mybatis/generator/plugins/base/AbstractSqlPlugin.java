@@ -21,6 +21,8 @@ import com.xjs.mybatis.generator.plugins.utils.PropertiesUtils;
 
 public abstract class AbstractSqlPlugin extends PluginAdapter {
 
+  protected static TextElement defaultOrder = new TextElement("order by id desc");
+
   protected static final FullyQualifiedJavaType localDateType =
       new FullyQualifiedJavaType("java.time.LocalDate");
 
@@ -131,6 +133,23 @@ public abstract class AbstractSqlPlugin extends PluginAdapter {
     this.addMethodDelete(interfaze, introspectedTable, methodName, parameters);
   }
 
+  protected void addMethodSelectType(final Interface interfaze,
+      final IntrospectedTable introspectedTable, final String methodName,
+      final FullyQualifiedJavaType returnType, final Parameter... parameters) {
+    if (!this.checkMethodEnable(introspectedTable, methodName)) {
+      return;
+    }
+    final Method method = new Method();
+    method.setReturnType(returnType);
+    method.setVisibility(JavaVisibility.PUBLIC);
+    method.setName(methodName);
+    for (final Parameter parameter : parameters) {
+      method.addParameter(parameter);
+    }
+    this.context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    interfaze.addMethod(method);
+  }
+
   protected void addMethodSelect(final Interface interfaze,
       final IntrospectedTable introspectedTable, final String methodName,
       final Parameter... parameters) {
@@ -209,6 +228,10 @@ public abstract class AbstractSqlPlugin extends PluginAdapter {
     answer.addAttribute(this.getBaseResultMapAttribute());
     this.context.getCommentGenerator().addComment(answer);
     return answer;
+  }
+
+  protected void addOrder(final XmlElement answer) {
+    answer.addElement(defaultOrder);
   }
 
   protected String getTableName() {
