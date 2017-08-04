@@ -54,23 +54,23 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
   @Override
   protected void addXmlElements(final Document document,
       final IntrospectedTable introspectedTable) {
+    new SelectByIdList().setTable(introspectedTable).addElements(document);
     new SelectByUser().setTable(introspectedTable).addElements(document);
     new SelectByEntityUser().setTable(introspectedTable).addElements(document);
     new SelectByEntity().setTable(introspectedTable).addElements(document);
-    new SelectByIdlist().setTable(introspectedTable).addElements(document);
     new SelectByUserAndEntity().setTable(introspectedTable).addElements(document);
     new SelectUnreadCountByUser().setTable(introspectedTable).addElements(document);
     new SelectUnreadCountByEntityUser().setTable(introspectedTable).addElements(document);
 
   }
 
-  private class SelectByIdlist extends AbstractSqlGenerator {
+  private class SelectByIdList extends AbstractSqlGenerator {
 
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectElement();
-      answer.addElement(new TextElement("where user_id in"));
-      answer.addElement(XmlUtils.foreach("Integer", null, null));
+      answer.addElement(new TextElement("where id in"));
+      answer.addElement(XmlUtils.foreach("INTEGER", null, "idList"));
       CommunitySqlPlugin.this.addOrder(answer);
       document.getRootElement().addElement(answer);
     }
@@ -80,7 +80,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectElement();
-      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=Integer}"));
+      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=INTEGER}"));
       CommunitySqlPlugin.this.addOrder(answer);
       document.getRootElement().addElement(answer);
     }
@@ -90,7 +90,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectElement();
-      answer.addElement(new TextElement("where entity_user_id = #{entityUserId,jdbcType=Integer}"));
+      answer.addElement(new TextElement("where entity_user_id = #{entityUserId,jdbcType=INTEGER}"));
       CommunitySqlPlugin.this.addOrder(answer);
       document.getRootElement().addElement(answer);
     }
@@ -119,7 +119,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectElement();
-      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=Integer}"));
+      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=INTEGER}"));
       answer.addElement(new TextElement(
           "and entity_type = #{entityType,jdbcType=INTEGER,javaType=com.xjs.community.type.CommunityEntityType,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}"));
       final XmlElement id = new XmlElement("if");
@@ -139,7 +139,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectCountElement();
-      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=Integer}"));
+      answer.addElement(new TextElement("where user_id = #{userId,jdbcType=INTEGER}"));
       answer.addElement(new TextElement("and is_read = 0 and status = 0"));
       document.getRootElement().addElement(answer);
     }
@@ -149,7 +149,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectCountElement();
-      answer.addElement(new TextElement("where entity_user_id = #{entityUserId,jdbcType=Integer}"));
+      answer.addElement(new TextElement("where entity_user_id = #{entityUserId,jdbcType=INTEGER}"));
       answer.addElement(new TextElement("and is_read = 0 and status = 0"));
       document.getRootElement().addElement(answer);
     }

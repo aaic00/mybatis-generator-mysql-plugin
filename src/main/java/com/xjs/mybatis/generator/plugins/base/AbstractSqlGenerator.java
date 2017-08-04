@@ -20,6 +20,7 @@ public abstract class AbstractSqlGenerator {
   protected IntrospectedTable introspectedTable;
   protected Attribute baseResultMapAttribute;
   protected XmlElement baseColumnListElement;
+  protected XmlElement blobColumnListElement;
   protected String tableName;
   protected TextElement fromTableElement;
 
@@ -36,6 +37,9 @@ public abstract class AbstractSqlGenerator {
     this.baseColumnListElement = new XmlElement("include"); // $NON-NLS-1$
     this.baseColumnListElement.addAttribute(new Attribute("refid", // $NON-NLS-1$
         introspectedTable.getBaseColumnListId()));
+    this.blobColumnListElement = new XmlElement("include"); // $NON-NLS-1$
+    this.blobColumnListElement.addAttribute(new Attribute("refid", // $NON-NLS-1$
+        introspectedTable.getBlobColumnListId()));
     this.tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
     this.fromTableElement = new TextElement("from ".concat(this.tableName)); // $NON-NLS-1$
     return this;
@@ -95,6 +99,10 @@ public abstract class AbstractSqlGenerator {
     this.context.getCommentGenerator().addComment(answer);
     answer.addElement(new TextElement("select ")); //$NON-NLS-1$
     answer.addElement(this.baseColumnListElement);
+    if (this.introspectedTable.hasBLOBColumns()) {
+      answer.addElement(new TextElement(","));
+      answer.addElement(this.blobColumnListElement);
+    }
     answer.addElement(this.fromTableElement);
     return answer;
   }
@@ -108,4 +116,5 @@ public abstract class AbstractSqlGenerator {
     answer.addElement(this.fromTableElement);
     return answer;
   }
+
 }

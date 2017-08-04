@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <classPathEntry location="c:\var\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
+  <context id="fund">
+    <plugin type="com.xjs.mybatis.generator.plugins.FieldRemarkPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.SerializablePlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.ToStringPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.SameAsPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin">
+      <property name="hackSchema" value="true" />
+    </plugin>
+    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceSqlPlugin">
+      <property name="idColumnName" value="fof_id" />
+    </plugin>
+    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceStableEntityPlugin" />
+
+    <commentGenerator>
+      <property name="suppressDate" value="true" />
+      <property name="javaFileEncoding" value="UTF-8" />
+    </commentGenerator>
+
+    <jdbcConnection connectionURL="jdbc:mysql://dev.360xjs.com:3306/fundn" driverClass="com.mysql.jdbc.Driver" password="putty456" userId="xjs" />
+    <javaModelGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" />
+    <sqlMapGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" />
+    <javaClientGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" type="XMLMAPPER" />
+
+    <!-- tables -->
+    <table tableName="fof_info" domainObjectName="Fof" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="fof_type" javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="fof_nature" javaType="com.xjs.finance.fof.FofNature" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="inception_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="stable_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="previous_stable_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="estimate_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.finance.fof.FofStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table tableName="fof_cash" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <property name="selectId" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table tableName="fof_cash_day" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <property name="hasStable" value="true" />
+      <property name="insertBatch" value="true" />
+      <property name="selectId" value="true" />
+      <property name="selectIdRecentReal" value="true" />
+      <property name="deleteIdEstimate" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+    </table>
+    <table tableName="fof_fund" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <property name="selectId" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table tableName="fof_fund_day" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <property name="hasStable" value="true" />
+      <property name="insertBatch" value="true" />
+      <property name="selectId" value="true" />
+      <property name="selectIdRecentReal" value="true" />
+      <property name="deleteIdEstimate" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+    </table>
+    <table tableName="fof_netvalue" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <property name="hasStable" value="true" />
+      <property name="insertBatch" value="true" />
+      <property name="selectId" value="true" />
+      <property name="selectIdRecentReal" value="true" />
+      <property name="deleteIdEstimate" value="true" />
+      <property name="selectIdDate" value="true" />
+      <property name="selectIdTerm" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="fof_type" javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+    </table>
+  </context>
+</generatorConfiguration>

@@ -2,20 +2,15 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
   <classPathEntry location="c:\var\maven\repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
-  <context id="fund">
-    <plugin type="com.xjs.mybatis.generator.plugins.FieldRemarkPlugin" />
+  <context id="user_community">
     <plugin type="com.xjs.mybatis.generator.plugins.SerializablePlugin" />
-    <plugin type="com.xjs.mybatis.generator.plugins.ParameterizedConstructorPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.FieldRemarkPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.ToStringPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    <plugin type="com.xjs.mybatis.generator.plugins.SameAsPlugin" />
     <plugin type="com.xjs.mybatis.generator.plugins.SqlPlugin">
       <property name="hackSchema" value="true" />
     </plugin>
-    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceSqlPlugin">
-      <property name="idColumnName" value="fof_id" />
-    </plugin>
-    <plugin type="com.xjs.mybatis.generator.plugins.finance.FinanceStableEntityPlugin" />
+    <plugin type="com.xjs.mybatis.generator.plugins.community.CommunitySqlPlugin" />
 
     <commentGenerator>
       <property name="suppressDate" value="true" />
@@ -23,72 +18,264 @@
     </commentGenerator>
 
     <jdbcConnection connectionURL="jdbc:mysql://dev.360xjs.com:3306/fundn" driverClass="com.mysql.jdbc.Driver" password="putty456" userId="xjs" />
-    <javaModelGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" />
-    <sqlMapGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" />
-    <javaClientGenerator targetPackage="com.xjs.finance.fof.dao" targetProject="xjs-data" type="XMLMAPPER" />
+    <javaModelGenerator targetPackage="com.xjs.community.entity" targetProject="xjs-graphql" />
+    <sqlMapGenerator targetPackage="com.xjs.community.dao" targetProject="xjs-graphql" />
+    <javaClientGenerator targetPackage="com.xjs.community.dao" targetProject="xjs-graphql" type="XMLMAPPER" />
 
-    <!-- tables -->
-    <table tableName="fof_info" domainObjectName="Fof" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+    <table schema="xjs" catalog="xjs" tableName="user_article" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractContent" /> -->
+      <property name="selectByIdList" value="true"/>
+      <property name="selectByUser" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="fof_type" javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
-      <columnOverride column="fof_nature" javaType="com.xjs.finance.fof.FofNature" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
-      <columnOverride column="inception_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="stable_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="previous_stable_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="estimate_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="status" javaType="com.xjs.finance.fof.FofStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
       <columnOverride column="create_datetime" isGeneratedAlways="true" />
       <columnOverride column="update_datetime" isGeneratedAlways="true" />
     </table>
-    <table tableName="fof_cash" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
-      <property name="selectId" value="true" />
+    <table schema="xjs" catalog="xjs" tableName="user_article_history" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.UserArticle" /> -->
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
       <columnOverride column="create_datetime" isGeneratedAlways="true" />
       <columnOverride column="update_datetime" isGeneratedAlways="true" />
     </table>
-    <table tableName="fof_cash_day" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
-      <property name="hasStable" value="true" />
-      <property name="insertBatch" value="true" />
-      <property name="selectId" value="true" />
-      <property name="selectIdRecentReal" value="true" />
-      <property name="deleteIdEstimate" value="true" />
+
+    <table schema="xjs" catalog="xjs" tableName="user_timeline" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractTimeline" /> -->
+      <property name="selectByIdList" value="true"/>
+      <property name="selectByUser" value="true"/>
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByEntity" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
-      <columnOverride column="create_datetime" isGeneratedAlways="true" />
-    </table>
-    <table tableName="fof_fund" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
-      <property name="selectId" value="true" />
-      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="interaction_method" javaType="com.xjs.community.type.CommunityInteractionMethod" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
       <columnOverride column="create_datetime" isGeneratedAlways="true" />
       <columnOverride column="update_datetime" isGeneratedAlways="true" />
     </table>
-    <table tableName="fof_fund_day" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
-      <property name="hasStable" value="true" />
-      <property name="insertBatch" value="true" />
-      <property name="selectId" value="true" />
-      <property name="selectIdRecentReal" value="true" />
-      <property name="deleteIdEstimate" value="true" />
+    <table schema="xjs" catalog="xjs" tableName="user_issue" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractTimeline" /> -->
+      <property name="selectByIdList" value="true"/>
+      <property name="selectByUser" value="true"/>
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByEntity" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_reply" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractTimeline" /> -->
+      <property name="selectByIdList" value="true"/>
+      <property name="selectByUser" value="true"/>
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByEntity" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_gallery" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_image" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_upvote" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByUserAndEntity" value="true"/>
+      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_following" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByUserAndEntity" value="true"/>
+      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_favorite" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByUserAndEntity" value="true"/>
+      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_call" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
+      <property name="selectByUser" value="true"/>
+      <property name="selectByEntity" value="true"/>
+      <property name="selectUnreadCountByUser" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_interaction" enableSelectByExample="false " enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
+      <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="interaction_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_dialogue" enableSelectByExample="false " enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractReadableContent" /> -->
+      <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="dialogue_type" javaType="com.xjs.community.type.CommunityDialogueType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_statistic_entity" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractStatistic" /> -->
+      <property name="selectByEntityUser" value="true"/>
+      <property name="selectByEntity" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="interaction_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="interaction_method" javaType="com.xjs.community.type.CommunityInteractionMethod" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_statistic_user" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractStatistic" /> -->
+      <property name="selectByUser" value="true"/>
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="interaction_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="interaction_method" javaType="com.xjs.community.type.CommunityInteractionMethod" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_setting_user" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
+      <property name="enableInsertIgnore" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="setting" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_complaint" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="complaint_type" javaType="com.xjs.community.type.ComplaintType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="codec" javaType="com.xjs.community.type.CommunityCodec" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="complaint_status" javaType="com.xjs.community.type.ComplaintStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_notice" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="is_read">
+        <property name="ignoreConstructor" value="true" />
+      </columnOverride>
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+    <table schema="xjs" catalog="xjs" tableName="user_operation" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="operation" javaType="com.xjs.community.type.CommunityOperation" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="create_datetime" isGeneratedAlways="true" />
+      <columnOverride column="update_datetime" isGeneratedAlways="true" />
+    </table>
+
+    <table schema="xjs" catalog="xjs" tableName="user_viewing" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
+      <property name="insertIgnore" value="true" />
+      <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="create_datetime" isGeneratedAlways="true" />
     </table>
-    <table tableName="fof_netvalue" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
-      <property name="hasStable" value="true" />
-      <property name="insertBatch" value="true" />
-      <property name="selectId" value="true" />
-      <property name="selectIdRecentReal" value="true" />
-      <property name="deleteIdEstimate" value="true" />
-      <property name="selectIdDate" value="true" />
-      <property name="selectIdTerm" value="true" />
+    <table schema="xjs" catalog="xjs" tableName="user_viewing_log" enableInsert="false" enableUpdateByPrimaryKey="false" enableDeleteByPrimaryKey="false" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false">
+      <!-- <property name="rootClass" value="com.xjs.community.type.AbstractEntity" /> -->
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
-      <columnOverride column="fof_type" javaType="com.xjs.finance.fund.FundType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
-      <columnOverride column="trade_date" javaType="java.time.LocalDate" typeHandler="org.apache.ibatis.type.LocalDateTypeHandler" />
-      <columnOverride column="stable" javaType="com.xjs.finance.Stable" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+      <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="create_datetime" isGeneratedAlways="true" />
     </table>
+
+    <!-- <table schema="xjs" catalog="xjs" tableName="user_topic_entity" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" -->
+    <!-- enableUpdateByExample="false"> -->
+    <!-- <generatedKey column="id" sqlStatement="JDBC" identity="true" /> -->
+    <!-- </table> -->
+    <!-- <table schema="xjs" catalog="xjs" tableName="user_topic_user" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" -->
+    <!-- enableUpdateByExample="false"> -->
+    <!-- <generatedKey column="id" sqlStatement="JDBC" identity="true" /> -->
+    <!-- </table> -->
+
+
   </context>
 </generatorConfiguration>
