@@ -44,9 +44,9 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
         JavaUtils.annotationParameter(entityType, "entityType"),
         JavaUtils.annotationParameter(integer, "entityId"),
         JavaUtils.annotationParameter(string, "entityCode"));
-    this.addMethodSelectType(interfaze, introspectedTable, "selectUnreadCountByUser", integer,
+    this.addMethodSelectType(interfaze, introspectedTable, "selectCountUnreadByUser", integer,
         JavaUtils.annotationParameter(integer, "userId"));
-    this.addMethodSelectType(interfaze, introspectedTable, "selectUnreadCountByEntityUser", integer,
+    this.addMethodSelectType(interfaze, introspectedTable, "selectCountUnreadByEntityUser", integer,
         JavaUtils.annotationParameter(integer, "entityUserId"));
 
   }
@@ -59,8 +59,8 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     new SelectByEntityUser().setTable(introspectedTable).addElements(document);
     new SelectByEntity().setTable(introspectedTable).addElements(document);
     new SelectByUserAndEntity().setTable(introspectedTable).addElements(document);
-    new SelectUnreadCountByUser().setTable(introspectedTable).addElements(document);
-    new SelectUnreadCountByEntityUser().setTable(introspectedTable).addElements(document);
+    new SelectCountUnreadByUser().setTable(introspectedTable).addElements(document);
+    new SelectCountUnreadByEntityUser().setTable(introspectedTable).addElements(document);
 
   }
 
@@ -135,7 +135,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     }
   }
 
-  private class SelectUnreadCountByUser extends AbstractSqlGenerator {
+  private class SelectCountUnreadByUser extends AbstractSqlGenerator {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectCountElement();
@@ -145,7 +145,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
     }
   }
 
-  private class SelectUnreadCountByEntityUser extends AbstractSqlGenerator {
+  private class SelectCountUnreadByEntityUser extends AbstractSqlGenerator {
     @Override
     protected void add(final Document document) {
       final XmlElement answer = this.createSelectCountElement();
