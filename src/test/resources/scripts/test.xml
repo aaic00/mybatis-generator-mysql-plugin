@@ -103,7 +103,7 @@
       <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
       <property name="selectByEntityUser" value="true"/>
       <property name="selectByUserAndEntity" value="true"/>
-      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <property name="selectCountUnreadByEntityUser" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
       <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
@@ -119,7 +119,7 @@
       <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
       <property name="selectByEntityUser" value="true"/>
       <property name="selectByUserAndEntity" value="true"/>
-      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <property name="selectCountUnreadByEntityUser" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
       <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
@@ -135,7 +135,7 @@
       <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
       <property name="selectByEntityUser" value="true"/>
       <property name="selectByUserAndEntity" value="true"/>
-      <property name="selectUnreadCountByEntityUser" value="true"/>
+      <property name="selectCountUnreadByEntityUser" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
       <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
@@ -151,7 +151,7 @@
       <!-- <property name="rootClass" value="com.xjs.community.type.AbstractInteraction" /> -->
       <property name="selectByUser" value="true"/>
       <property name="selectByEntity" value="true"/>
-      <property name="selectUnreadCountByUser" value="true"/>
+      <property name="selectCountUnreadByUser" value="true"/>
       <generatedKey column="id" sqlStatement="JDBC" identity="true" />
       <columnOverride column="entity_type" javaType="com.xjs.community.type.CommunityEntityType" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
       <columnOverride column="status" javaType="com.xjs.community.type.CommunityStatus" typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler">
