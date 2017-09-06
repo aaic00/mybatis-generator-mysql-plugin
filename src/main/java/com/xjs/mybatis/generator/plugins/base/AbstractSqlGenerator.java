@@ -110,7 +110,7 @@ public abstract class AbstractSqlGenerator {
   protected XmlElement createSelectCountElement() {
     final XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
     answer.addAttribute(new Attribute("id", this.sqlName)); //$NON-NLS-1$
-    answer.addAttribute(this.baseResultMapAttribute);
+    answer.addAttribute(new Attribute("resultType", "java.lang.Integer"));
     this.context.getCommentGenerator().addComment(answer);
     answer.addElement(new TextElement("select count(*) ")); //$NON-NLS-1$
     answer.addElement(this.fromTableElement);
