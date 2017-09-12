@@ -130,6 +130,7 @@ public class CommunitySqlPlugin extends AbstractSqlPlugin {
       code.addAttribute(new Attribute("test", "entityCode != null"));
       code.addElement(new TextElement("and entity_code = #{entityCode,jdbcType=VARCHAR}"));
       answer.addElement(code);
+      code.addElement(new TextElement("and status = 0"));
       CommunitySqlPlugin.this.addOrder(answer);
       document.getRootElement().addElement(answer);
     }
