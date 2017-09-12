@@ -209,11 +209,14 @@ public class SqlPlugin extends AbstractSqlPlugin {
         }
       }
 
+
       insertClause.append(')'); // $NON-NLS-1$
       answer.addElement(new TextElement(insertClause.toString()));
 
       valuesClause.append(')'); // $NON-NLS-1$
       valuesClauses.add(valuesClause.toString());
+
+      updateClauses.add(updateClause.toString());
 
       for (final String clause : valuesClauses) {
         answer.addElement(new TextElement(clause));
